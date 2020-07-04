@@ -7,7 +7,7 @@ Refer the following two notebooks for implementation
 2. [Traffic sign classifier](https://github.com/parekhjigar/Traffic-sign-classifier-cnn/blob/master/Traffic_sign_classification.ipynb)
 
 ## Abstract
-The purpose of this report and project is to build two highly robust classification models, one of which is capable to classify the road traffic signs and the other is capable to classify the shapes of the traffic signs using deep learning. The models are implemented using Convolutional neural network (CNN) and are similar to AlexNet. The dataset used is a subset of Belgium Traffic Sign Classification Benchmark. Both the models gave validation and test accuracy above 98%.
+The purpose of this project is to build two highly robust classification models, one of which is capable to classify the road traffic signs and the other is capable to classify the shapes of the traffic signs using deep learning. The models are implemented using Convolutional neural network (CNN) and are similar to AlexNet. The dataset used is a subset of Belgium Traffic Sign Classification Benchmark. Both the models gave validation and test accuracy above 98%.
 
 ## Introduction
 The dawn of self-driving cars has began and it has a potential to revolutionize the way people travel by remarkably improving the level of safety along with great convenience and efficiency. The self-driving cars are generally distinguished by five levels of automation wherein the level-1 requires the driver’s assistance while the level-5 provides a completely autonomous experience. Although, it is a very crucial aspect to achieve the ability of full autonomy in public roads, the most essential aspect is to perceive the surrounding environment visually and by sensors like LiDAR and radar. So, the fundamental goal of the perception pipeline is to detect and recognise the traffic signs and act upon it accordingly.
@@ -18,15 +18,15 @@ The recognition of traffic signs is considered to be a very important feature of
 The dataset is a subset of Belgium Traffic Sign Classification Benchmark. Its resolution has been downsampled to 28x28 pixels to make dimensions of dataset consistent. Firstly, the original directory structure has been modified manually for training both the models. The root directory has the folders of signs for training to sign classifier and the root directory has the folders of shapes for the shape classifier. Now, I appended the images and labels to an array using the PIL library that copied all the image content into an array named “training_data”. Although the provided images were already grayscale, but their shape had 3 channels, so I converted its channel to 1.
 
 2. **Pickle Data:**
-Pickling data is basically to serialize and deserialize any python objects to byte streams. Here, I'm pickling the training_data list so that I can unpick the byte stream whenever required. The google colab kernel clears all the data and variables each time it is restarted and the data needs to be loaded to memory every time which is very time consuming.
-• Saving all the raw pixel data of the sign images in a 4D array named “feature.pickle" and "feature-shape.pickle" which consists of (No. of images, width, height, colour channels)
-• Saving index of categories(shape and sign) that maps to each images in a 1D array named “labels.pickle" and “labels-shape.pickle”
- So, by unpicking this data, we get the images data in the form of numpy arrays and can perform operations on it easily.
-Normalization:
+Pickling data is basically to serialize and deserialize any python objects to byte streams. Here, I'm pickling the training_data list so that I can unpick the byte stream whenever required. The google colab kernel clears all the data and variables each time it is restarted and the data needs to be loaded to memory every time which is very time consuming. Saving all the raw pixel data of the sign images in a 4D array named “feature.pickle" and "feature-shape.pickle" which consists of (No. of images, width, height, colour channels). Saving index of categories(shape and sign) that maps to each images in a 1D array named “labels.pickle" and “labels-shape.pickle”. So, by unpicking this data, we get the images data in the form of numpy arrays and can perform operations on it easily.
+
+3. **Normalization:**
 Data normalization is very essential step while building an image classifier. It is performed to make sure that each input pixel has a similar distribution of data. Moreover, it is ideally better to have all the images with same aspect ratio. As I want all the pixel numbers to be positive so I scaled it between the range 0 to 255 by dividing every image data by 255. This will further make the convergence faster while training the network.
-Splitting data:
+
+4. **Splitting data:**
 The Training set is used to train the actual model. 75% of the data is used for training. The Validation set is used to give us biased evaluation of the trained model. 15% of data is used for validation. The Test set is unseen by the model while training, so it is used for the final evaluation of the model. 10% data is used for testing. This splitting of data is performed using train_test_split of sklearn library.
-Distribution of data:
+
+5. **Distribution of data:**
 By plotting the distribution graphs, it is clearly visible that the dataset is very unbalanced across all the classes in the training set for both the models. Considering the sign model, the category of sign “stop” has only 43 images meanwhile the category of sign “warning” has 695 images. On the other hand, the category of shape “hex” has only 43 images meanwhile the category “round” has 1760 images. This may certainly lead our model to make biased decisions towards the classes which have more data, hence over-fitting the model. So, to evaluate this, I have chose to train models first with this distribution itself, and later perform data augmentation and train another set of model and compare between the two.
 
 ## Data Augmentation:
