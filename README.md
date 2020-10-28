@@ -51,8 +51,6 @@ I have followed a basic approach to build the convolutional neural network by co
 | SoftMax  | Activation function  |
 
  
-
- 
 ## Evaluation Metrics
 
 |   | Shape model  |  Sign Model |
@@ -61,6 +59,12 @@ I have followed a basic approach to build the convolutional neural network by co
 | Validation accuracy  | 99.46%  |  98.39% |
 | Test accuracy  | 99.18%  | 98.38%  |
 
+## Independent Evaluation
+
+Firstly, the test accuracy of both sign and shape models were completely unexpected as it was trained under such unbalanced data with minimal configurations of CNN. As the distribution of data had huge difference between the classes, I expected that the model will overfit, but it performed very well on test dataset as well. Data Augmentation was performed thinking that balancing the data and having more training samples would improve the model’s performance, but it took double the layers to reach the accuracy of the model without augmentation.
+	The independent evaluation of the shape model was performed using a subset of data from the German Traffic Sign dataset. The prediction of the model was quite accurate and it achieved an accuracy of 93.22% as shown in the figure. (12). The only incorrect prediction made by the model is that it detected the square images as triangle as it had a thick line at the diagonal making the model to think it was triangle. Meanwhile, there were no such square images with a line in the training set. The model would have performed even better if there were some appropriate data to test with.	
+	There were lot of challenges faced during independent evaluation of sign model. It was hard to find 16 classes of sign images with the same shape, for instance the bicycle sign image of our dataset is round in shape, but there were bicycle sign with a different shape out there. As we don’t know what features does the CNN consider for training a particular sign. It might be considering the borders of the shape along with the bicycle logo, so the model won’t be able to classify it as a bicycle sign if has a different shape or features. So, to have a perfect evaluation of the model, it was necessary to have images of all 16 classes that the model is actually expecting. Hence, I augmented 10 samples of each classes manually which had transformations totally different to that made in the model, so that the image is completely new to the model. But, for the sign model although the test accuracy was 99.18%, it performed very poor with this new dataset and gave just 61.25% of accuracy.
+	The figure. (11) shows the prediction of sign model, as you can see the predictions went wrong with the classes which has multiple types inside a single category, i.e. traffic-directive and travel-direction which made the model to perform poorly. This could be improved by having a single type of sign in a category.
 
 ## Conclusion
 The project covers how deep learning can be used for classification of traffic signs and shapes by applying various pre-processing, regularization and data augmentation techniques on different CNN architectures.
